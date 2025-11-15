@@ -89,6 +89,7 @@ $(() => { FissionOpt().then((FissionOpt) => {
   const otherBlocks = [
     {name: "[]", title:"Reactor Cell"},
     {name: "##", title:"Moderator"},
+    {name: "Ir", title:"Irradiation Chamber"},
     {name: "..", title:"Air"},
   ];
   const nCoolerTypes = heatSinks.length;
@@ -100,14 +101,15 @@ $(() => { FissionOpt().then((FissionOpt) => {
   const tileClasses = tileNames.slice();
   tileClasses[nCoolerTypes] = 'cell';
   tileClasses[nCoolerTypes + 1] = 'mod';
-  tileClasses[nCoolerTypes + 2] = 'air';
+  tileClasses[nCoolerTypes + 2] = 'irr';
+  tileClasses[nCoolerTypes + 3] = 'air';
 
   const rates = [], limits = [];
   $('#rate input').each(function() { rates.push($(this)); });
   $('#activeRate input').each(function() { rates.push($(this)); });
   $('#limit input').each(function() { limits.push($(this)); });
   {
-    const tail = limits.splice(-2);
+    const tail = limits.splice(-3);
     $('#activeLimit input').each(function() { limits.push($(this)); });
     limits.push(...tail);
   }
@@ -123,6 +125,7 @@ $(() => { FissionOpt().then((FissionOpt) => {
   tileSaveNames[21] = 'Nitrogen';
   tileSaveNames[nCoolerTypes] = 'FuelCell';
   tileSaveNames[nCoolerTypes + 1] = 'Graphite';
+  tileSaveNames[nCoolerTypes + 2] = 'IrradiationChamber';
   
   const settings = new FissionOpt.FissionSettings();
   const design = $('#design');
@@ -179,6 +182,7 @@ $(() => { FissionOpt().then((FissionOpt) => {
     appendInfo('Fuel Use Rate', sample.getAvgBreed(), '&times;');
     appendInfo('Efficiency', sample.getEfficiency() * 100, '%');
     appendInfo('Avg Power', sample.getAvgPower(), 'RF/t');
+    appendInfo('Irradiation Flux', sample.getIrradiatorFlux(), '');
     design.append(block);
 
     const shapes = [], strides = [], data = sample.getData();
