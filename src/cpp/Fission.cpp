@@ -150,6 +150,36 @@ namespace Fission {
       checkAccessibility(x, y, z + 1);
   }
 
+  bool Evaluator::hasModeratorWithCellInLine(int x, int y, int z) const {
+    // Check all 6 directions for a moderator
+    // For each moderator found, check if there's a cell in the opposite direction
+    // This implements the "imf" pattern (irradiator, moderator, fuel)
+    const int directions[6][3] = {
+      {-1, 0, 0}, {1, 0, 0},
+      {0, -1, 0}, {0, 1, 0},
+      {0, 0, -1}, {0, 0, 1}
+    };
+    
+    for (int i = 0; i < 6; i++) {
+      int mx = x + directions[i][0];
+      int my = y + directions[i][1];
+      int mz = z + directions[i][2];
+      
+      // Check if there's a moderator at this position
+      if (isTileSafe(Moderator, mx, my, mz)) {
+        // Check if there's a cell in the same line (beyond the moderator)
+        int cx = mx + directions[i][0];
+        int cy = my + directions[i][1];
+        int cz = mz + directions[i][2];
+        
+        if (isTileSafe(Cell, cx, cy, cz)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   void Evaluator::run(const xt::xtensor<int, 3> &state, Evaluation &result) {
     result.invalidTiles.clear();
     result.powerMult = 0.0;
@@ -157,6 +187,7 @@ namespace Fission {
     result.cooling = 0.0;
     result.breed = 0;
     result.fuelcells = 0;
+    result.irradiatorFlux = 0;
     isActive.fill(false); // Refers to 'in-use' as opposed to active-type HSinks
     isModeratorInLine.fill(false);
     this->state = &state;
@@ -378,6 +409,24 @@ namespace Fission {
         }
       }
     }
+    
+    // Validate and count irradiation chambers
+    for (int x{}; x < settings.sizeX; ++x) {
+      for (int y{}; y < settings.sizeY; ++y) {
+        for (int z{}; z < settings.sizeZ; ++z) {
+          int tile((*this->state)(x, y, z));
+          if (tile == Irradiator) {
+            // Irradiation chamber must be next to a moderator with a fuel cell in the same line
+            if (hasModeratorWithCellInLine(x, y, z)) {
+              result.irradiatorFlux++;
+            } else {
+              result.invalidTiles.emplace_back(x, y, z);
+            }
+          }
+        }
+      }
+    }
+    
     // finalise
     for (int x{}; x < settings.sizeX; ++x) {
       for (int y{}; y < settings.sizeY; ++y) {

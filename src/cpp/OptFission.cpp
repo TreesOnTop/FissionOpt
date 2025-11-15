@@ -67,6 +67,8 @@ namespace Fission {
       case GoalEfficiency:
         rawPrimary = settings.ensureHeatNeutral ? (x.efficiency - 1) * x.dutyCycle : x.efficiency - 1;
         break;
+      case GoalIrradiation:
+        return static_cast<double>(x.irradiatorFlux);
     }
     if(!settings.applyAdditionalGoals){
       return rawPrimary;

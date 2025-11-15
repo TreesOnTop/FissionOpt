@@ -28,7 +28,7 @@ namespace Fission {
     // Active variants
     Active,
     // Other
-    Cell = Active * 2, Moderator,
+    Cell = Active * 2, Moderator, Irradiator,
     // Air must be last
     Air
   };
@@ -36,7 +36,8 @@ namespace Fission {
   enum {
     GoalPower,
     GoalBreeder,
-    GoalEfficiency
+    GoalEfficiency,
+    GoalIrradiation
   };
 
   struct Settings {
@@ -60,6 +61,7 @@ namespace Fission {
     Coords invalidTiles;
     double powerMult, heatMult, cooling;
     int fuelcells;
+    int irradiatorFlux;
     // Computed
     double heat, netHeat, dutyCycle, avgMult, power, avgPower, avgBreed, efficiency, breed;
     double heatMultiplier, fitness;
@@ -85,6 +87,7 @@ namespace Fission {
     int countCasingNeighbors(int x, int y, int z) const;
     bool checkAccessibility(int compatibleTile, int x, int y, int z);
     bool checkAccessibility(int x, int y, int z);
+    bool hasModeratorWithCellInLine(int x, int y, int z) const;
   public:
     Evaluator(const Settings &settings);
     void run(const xt::xtensor<int, 3> &state, Evaluation &result);
