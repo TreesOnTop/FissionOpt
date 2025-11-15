@@ -98,6 +98,7 @@ input {
 .Sl {color: rgb(62, 255, 120);}
 .cell {color: gray;}
 .mod {color: black;}
+.irr {color: rgb(255, 165, 0);}
 .air {color: white;}
 
 #design>* {

@@ -83,7 +83,7 @@
             <th class="NB">NB</th><th class="Nr">Nr</th><th class="Ob">Ob</th>
             <th class="Pm">Pm</th><th class="Pp">Pp</th><th class="Ag">Ag</th>
             <th class="Sl">Sl</th>
-            <th class="cell">[]</th><th class="mod">##</th>
+            <th class="cell">[]</th><th class="mod">##</th><th class="irr" title="Irradiation Chamber">Ir</th>
           </tr></thead>
           <tbody>
             <tr id="rate"><th>Cooling Rate (H/t)</th>
@@ -98,7 +98,7 @@
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
               <td><input type="text"></td>
-              <td>&mdash;</td><td>&mdash;</td>
+              <td>&mdash;</td><td>&mdash;</td><td>&mdash;</td>
             </tr>
             <tr id="limit"><th>Max Allowed</th>
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
@@ -112,7 +112,7 @@
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
               <td><input type="text"></td>
-              <td><input type="text"></td><td><input type="text"></td><td>
+              <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td>
             </tr>
             <tr id="activeRate"><th>Active Rate (H/t)</th>
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
@@ -126,7 +126,7 @@
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
               <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
               <td><input type="text"></td>
-              <td>&mdash;</td><td>&mdash;</td>
+              <td>&mdash;</td><td>&mdash;</td><td>&mdash;</td>
             </tr>
             <tr id="activeLimit"><th>Max Active Allowed</th>
               <td><input type="text" value="0"></td><td><input type="text" value="0"></td><td><input type="text" value="0"></td>
@@ -140,7 +140,7 @@
               <td><input type="text" value="0"></td><td><input type="text" value="0"></td><td><input type="text" value="0"></td>
               <td><input type="text" value="0"></td><td><input type="text" value="0"></td><td><input type="text" value="0"></td>
               <td><input type="text" value="0"></td>
-              <td>&mdash;</td><td>&mdash;</td>
+              <td>&mdash;</td><td>&mdash;</td><td>&mdash;</td>
             </tr>
           </tbody>
         </table>
@@ -159,6 +159,7 @@
             <label><input type="radio" name="goal" value="0" checked>Optimize for power.</label><br>
             <label><input type="radio" name="goal" value="1">Optimize for breeding (maximize fuel consumption rate).</label><br>
             <label><input type="radio" name="goal" value="2">Optimize for efficiency.</label><br>
+            <label><input type="radio" name="goal" value="3">Optimize for irradiation (maximize irradiation chamber count).</label><br>
           </div>
         </div>
         <label><input type="checkbox" id="symZ" checked>X symmetry</label>

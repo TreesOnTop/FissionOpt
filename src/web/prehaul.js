@@ -223,19 +223,21 @@ $(() => { FissionOpt().then((FissionOpt) => {
   const settings = new FissionOpt.FissionSettings();
   const design = $('#design');
   const save = $('#save');
-  const nCoolerTypes = 15, air = nCoolerTypes * 2 + 2;
-  const tileNames = ['Wt', 'Rs', 'Qz', 'Au', 'Gs', 'Lp', 'Dm', 'He', 'Ed', 'Cr', 'Fe', 'Em', 'Cu', 'Sn', 'Mg', '[]', '##', '..'];
+  const nCoolerTypes = 15, air = nCoolerTypes * 2 + 3;
+  const tileNames = ['Wt', 'Rs', 'Qz', 'Au', 'Gs', 'Lp', 'Dm', 'He', 'Ed', 'Cr', 'Fe', 'Em', 'Cu', 'Sn', 'Mg', '[]', '##', 'Ir', '..'];
   const tileTitles = ['Water', 'Redstone', 'Quartz', 'Gold', 'Glowstone', 'Lapis', 'Diamond', 'Liquid Helium',
-    'Enderium', 'Cryotheum', 'Iron', 'Emerald', 'Copper', 'Tin', 'Magnesium', 'Reactor Cell', 'Moderator', 'Air'];
+    'Enderium', 'Cryotheum', 'Iron', 'Emerald', 'Copper', 'Tin', 'Magnesium', 'Reactor Cell', 'Moderator', 'Irradiation Chamber', 'Air'];
   $('#blockType>:not(:first)').each((i, x) => { $(x).attr('title', tileTitles[i]); });
   const tileClasses = tileNames.slice();
   tileClasses[15] = 'cell';
   tileClasses[16] = 'mod';
-  tileClasses[17] = 'air';
-  const tileSaveNames = tileTitles.slice(0, 17);
+  tileClasses[17] = 'irr';
+  tileClasses[18] = 'air';
+  const tileSaveNames = tileTitles.slice(0, 18);
   tileSaveNames[7] = 'Helium';
   tileSaveNames[15] = 'FuelCell';
   tileSaveNames[16] = 'Graphite';
+  tileSaveNames[17] = 'IrradiationChamber';
 
   const displayTile = (tile) => {
     let active = false;
@@ -282,6 +284,7 @@ $(() => { FissionOpt().then((FissionOpt) => {
     appendInfo('Fuel Use Rate', sample.getAvgBreed(), '&times;');
     appendInfo('Efficiency', sample.getEfficiency() * 100, '%');
     appendInfo('Avg Power', sample.getAvgPower(), 'RF/t');
+    appendInfo('Irradiation Flux', sample.getIrradiatorFlux(), '');
     design.append(block);
 
     const shapes = [], strides = [], data = sample.getData();

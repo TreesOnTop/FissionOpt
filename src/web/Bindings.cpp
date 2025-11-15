@@ -58,6 +58,10 @@ static double getEfficiency(const Fission::Sample &x) {
   return x.value.efficiency;
 }
 
+static int getFissionIrradiatorFlux(const Fission::Sample &x) {
+  return x.value.irradiatorFlux;
+}
+
 static emscripten::val getLossHistory(const Fission::Opt &opt) {
   auto &data(opt.getLossHistory());
   return emscripten::val(emscripten::typed_memory_view(data.size(), data.data()));
@@ -154,7 +158,8 @@ EMSCRIPTEN_BINDINGS(FissionOpt) {
     .function("getDutyCycle", &getDutyCycle)
     .function("getAvgPower", &getAvgPower)
     .function("getAvgBreed", &getAvgBreed)
-    .function("getEfficiency", &getEfficiency);
+    .function("getEfficiency", &getEfficiency)
+    .function("getIrradiatorFlux", &getFissionIrradiatorFlux);
   emscripten::class_<Fission::Opt>("FissionOpt")
     .constructor<const Fission::Settings&, bool>()
     .function("stepInteractive", &Fission::Opt::stepInteractive)
