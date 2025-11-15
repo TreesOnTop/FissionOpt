@@ -73,6 +73,7 @@ input {
 .air {color: white;}
 .cell {color: gray;}
 .mod {color: black;}
+.irr {color: rgb(255, 165, 0);}
 
 #design>* {
   float: left;
